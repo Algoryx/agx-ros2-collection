@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>agx_tutorials</name>
+  <version>0.0.0</version>
+  <description>TODO: Package description</description>
+  <maintainer email="daniel.lindmark@algoryx.com">daniel</maintainer>
+  <license>TODO: License declaration</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>control_msgs</exec_depend>
+  <exec_depend>interactive_markers</exec_depend>
+  <exec_depend>moveit_core</exec_depend>
+  <exec_depend>moveit_ros_perception</exec_depend>
+  <exec_depend>moveit_ros_planning_interface</exec_depend>
+  <exec_depend>moveit_servo</exec_depend>
+  <exec_depend>moveit_hybrid_planning</exec_depend>
+  <exec_depend>moveit_visual_tools</exec_depend>
+  <exec_depend>moveit_msgs</exec_depend>
+  <exec_depend>pluginlib</exec_depend>
+  <exec_depend>rviz_visual_tools</exec_depend>
+  <exec_depend>tf2_eigen</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>moveit_task_constructor_core</exec_depend>
+  <exec_depend>pick_ik</exec_depend>
+
+  <exec_depend>controller_manager</exec_depend>
+  <exec_depend>topic_based_ros2_control</exec_depend>
+  <exec_depend>gripper_controllers</exec_depend>
+  <exec_depend>joint_state_broadcaster</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>joint_trajectory_controller</exec_depend>
+  <exec_depend>joy</exec_depend>
+  <exec_depend>jupyter-notebook</exec_depend>
+  <exec_depend>moveit</exec_depend>
+  <exec_depend>moveit_configs_utils</exec_depend>
+  <exec_depend>moveit_py</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>ros2_control</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>xacro</exec_depend>
+  <exec_depend>kinova_gen3_7dof_robotiq_2f_85_moveit_config</exec_depend>
+
+  <exec_depend>agx_tutorials_resources_panda_description</exec_depend>
+  <exec_depend>agx_tutorials_resources_panda_moveit_config</exec_depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
