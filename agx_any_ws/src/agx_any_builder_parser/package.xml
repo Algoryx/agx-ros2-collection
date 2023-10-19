@@ -1,20 +1,18 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>agx_msgs</name>
+  <name>agx_any_builder_parser</name>
   <version>1.3.0</version>
-  <description>Package containing the agx_msgs::Any message, used when serializing custom data structures. Created by Algoryx Simulation AB.</description>
+  <description>Package for sending and receiving custom data types, created by Algoryx Simulation AB.</description>
   <maintainer email="josef.holmner@algoryx.com">Admin</maintainer>
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <depend>agx_msgs</depend>
+
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
-
-  <build_depend>rosidl_default_generators</build_depend>
-  <exec_depend>rosidl_default_runtime</exec_depend>
-  <member_of_group>rosidl_interface_packages</member_of_group>
 
   <export>
     <build_type>ament_cmake</build_type>
