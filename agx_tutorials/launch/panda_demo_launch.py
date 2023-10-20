@@ -1,4 +1,6 @@
 import os
+import sys
+
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
@@ -8,6 +10,12 @@ from launch.actions import ExecuteProcess
 from ament_index_python.packages import get_package_share_directory
 from moveit_configs_utils import MoveItConfigsBuilder
 
+try:
+    import agx
+    import agxIO
+except ImportError as e:
+    print("Could not import AGX. Make sure you have sourced your AGX installation.")
+    sys.exit(1)
 
 def generate_launch_description():
 
@@ -16,8 +24,32 @@ def generate_launch_description():
         "ros2_control_hardware_type",
         default_value="agx",
         description="ROS2 control hardware interface type to use for the launch file -- possible values: [mock_components, agx]",
+        choices=["mock_components", "agx"]
     )
+
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+
+    path_to_agx_simulation_script = os.path.join(
+        get_package_share_directory("agx_tutorials"),
+        "launch",
+        "panda_agx_simulation.py"
+    )
+    path_to_urdf = os.path.join(
+        get_package_share_directory("agx_tutorial_resources_panda_description"),
+        "urdf",
+        "panda.urdf"
+    )
+    path_to_package = os.path.join(
+        get_package_share_directory("agx_tutorial_resources_panda_description"), ".."
+    )
+    start_agx_simulation = ExecuteProcess(
+            cmd=[
+            'python3',
+            path_to_agx_simulation_script,
+            path_to_urdf,
+            path_to_package],
+            name="agx simulation",
+            shell=True)
 
     moveit_config = (
         MoveItConfigsBuilder("agx_tutorial_resources_panda")
@@ -152,6 +184,7 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
+            start_agx_simulation,
             ros2_control_hardware_type,
             rviz_node,
             world2robot_tf_node,
