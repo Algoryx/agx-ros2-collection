@@ -1,3 +1,4 @@
-agx_any_ws/build
-agx_any_ws/install
-agx_any_ws/log
+.vscode
+/build
+/install
+/log
