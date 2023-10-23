@@ -5,6 +5,7 @@ import agxCollide
 import agxRender
 import agxModel
 
+import os
 import sys
 import random
 import argparse

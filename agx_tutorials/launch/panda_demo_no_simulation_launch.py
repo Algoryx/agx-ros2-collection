@@ -29,29 +29,6 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
-    path_to_agx_simulation_script = os.path.join(
-        get_package_share_directory("agx_tutorials"),
-        "launch",
-        "panda_agx_simulation.py"
-    )
-    # Should I change the .urdf file so that it looks for paths in share?
-    path_to_urdf = os.path.join(
-        get_package_share_directory("agx_tutorial_resources_panda_description"),
-        "urdf",
-        "panda.urdf"
-    )
-    path_to_package_share = os.path.join(
-        get_package_prefix("agx_tutorial_resources_panda_description"), ".."
-    )
-    start_agx_simulation = ExecuteProcess(
-            cmd=[
-            'python3',
-            path_to_agx_simulation_script,
-            path_to_urdf,
-            path_to_package_share],
-            name="agx simulation",
-            shell=True)
-
     moveit_config = (
         MoveItConfigsBuilder("agx_tutorial_resources_panda")
         .robot_description(
@@ -185,7 +162,6 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
-            start_agx_simulation,
             ros2_control_hardware_type,
             rviz_node,
             world2robot_tf_node,
