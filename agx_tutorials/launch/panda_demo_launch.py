@@ -40,7 +40,7 @@ def generate_launch_description():
         "urdf",
         "panda.urdf"
     )
-    path_to_package_share = os.path.join(
+    path_to_package_install = os.path.join(
         get_package_prefix("agx_tutorial_resources_panda_description"), ".."
     )
     start_agx_simulation = ExecuteProcess(
@@ -48,7 +48,7 @@ def generate_launch_description():
             'python3',
             path_to_agx_simulation_script,
             path_to_urdf,
-            path_to_package_share],
+            path_to_package_install],
             name="agx simulation",
             shell=True)
 
