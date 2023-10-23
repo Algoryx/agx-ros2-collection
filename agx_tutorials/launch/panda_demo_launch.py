@@ -34,7 +34,7 @@ def generate_launch_description():
         "launch",
         "panda_agx_simulation.py"
     )
-    # Should I change the .urdf file so that it looks for paths in share?
+
     path_to_urdf = os.path.join(
         get_package_share_directory("agx_tutorial_resources_panda_description"),
         "urdf",
