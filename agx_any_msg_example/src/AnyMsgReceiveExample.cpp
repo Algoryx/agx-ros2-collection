@@ -1,6 +1,6 @@
 // Created by Algoryx Simulation AB under the Apache-2.0 license.
 
-#include "agx_msgs/msg/Any.hpp"
+#include "agx_msgs/msg/any.hpp"
 #include "agx_any_builder_parser/AnyMessageParser.h"
 
 #include "rclcpp/rclcpp.hpp"
