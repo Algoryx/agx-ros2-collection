@@ -10,6 +10,6 @@
     <xacro:include filename="panda.ros2_control.xacro" />
     <xacro:include filename="panda_hand.ros2_control.xacro" />
 
-    <xacro:panda_ros2_control name="PandaFakeSystem" initial_positions_file="$(arg initial_positions_file)" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+    <xacro:panda_ros2_control name="PandaFakeSystem" initial_positions_file="$(arg initial_positions_file)" ros2_control_hardware_type="$(arg ros2_control_hardware_type)" command_interface="$(arg command_interface)"/>
     <xacro:panda_hand_ros2_control name="PandaHandFakeSystem" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
 </robot>

@@ -82,9 +82,9 @@ def buildScene1():
     ap = argparse.ArgumentParser()
     ap.add_argument("panda-urdf", help="Path to the panda.urdf file to load")
     ap.add_argument("panda-urdf-package", help="Path to the package directory that the panda.urdf file references")
+    ap.add_argument("command-interface", choices=["position", "effort"])
     args, _ = ap.parse_known_args()
     args = vars(args)
-
 
     # Construct the floor that the panda robot will stand on
     floor = agxCollide.Geometry(agxCollide.Box(agx.Vec3(5, 5, 0.1)))
@@ -142,6 +142,11 @@ def buildScene1():
     ros2_clock = ROS2ClockPublisher()
     simulation().add(ros2_clock, agxSDK.EventManager.HIGHEST_PRIORITY)
 
+    if args["command-interface"] == "position":
+        command_interface = cpp_ROS2ControlInterface.POSITION
+    elif args["command-interface"] == "effort":
+        command_interface == cpp_ROS2ControlInterface.EFFORT
+
     joint_names = agx.NameVector()
     joint_names.append("panda_joint1")
     joint_names.append("panda_joint2")
@@ -153,7 +158,7 @@ def buildScene1():
     panda_arm_control_interface = cpp_ROS2ControlInterface(
         panda_assembly_ref.get(),
         joint_names,
-        cpp_ROS2ControlInterface.POSITION,
+        command_interface,
         "agx_joint_states",
         "agx_joint_commands"
     )
@@ -174,7 +179,7 @@ def buildScene1():
 
     application().getSceneDecorator().setEnableShadows(True)
 
-    simulation().setTimeStep(0.01)
+    simulation().setTimeStep(0.004)
 
     return root()
 

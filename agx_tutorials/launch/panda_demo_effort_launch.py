@@ -28,7 +28,7 @@ def generate_launch_description():
     )
     command_interface = DeclareLaunchArgument(
         "command_interface",
-        default_value="position",
+        default_value="effort",
         description="possible values: [position, effort]",
         choices=["position", "effort"]
     )
@@ -54,7 +54,8 @@ def generate_launch_description():
             'python3',
             path_to_agx_simulation_script,
             path_to_urdf,
-            path_to_package_install],
+            path_to_package_install,
+            "effort"],
             name="agx simulation",
             shell=True)
 
@@ -152,7 +153,7 @@ def generate_launch_description():
     ros2_controllers_path = os.path.join(
         get_package_share_directory("agx_tutorial_resources_panda_moveit_config"),
         "config",
-        "ros2_controllers.yaml",
+        "ros2_controllers_effort.yaml",
     )
     ros2_control_node = Node(
         package="controller_manager",
