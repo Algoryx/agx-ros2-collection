@@ -195,7 +195,7 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
-            start_agx_simulation,
+            # start_agx_simulation,
             ros2_control_hardware_type,
             command_interface,
             rviz_node,

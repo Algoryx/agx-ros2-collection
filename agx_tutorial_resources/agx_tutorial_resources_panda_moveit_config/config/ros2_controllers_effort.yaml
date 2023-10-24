@@ -29,14 +29,24 @@ panda_arm_controller:
       - panda_joint6
       - panda_joint7
     gains:
-      panda_joint1: { p: 12000.0, d: 50.0, i: 0.0, i_clamp: 10000.0 }
-      panda_joint2: { p: 30000.0, d: 100.0, i: 0.02, i_clamp: 10000.0 }
-      panda_joint3: { p: 18000.0, d: 50.0, i: 0.01, i_clamp: 1.0 }
-      panda_joint4: { p: 18000.0, d: 70.0, i: 0.01, i_clamp: 10000.0 }
-      panda_joint5: { p: 12000.0, d: 70.0, i: 0.01, i_clamp: 1.0 }
-      panda_joint6: { p: 7000.0, d: 50.0, i: 0.01, i_clamp: 1.0 }
-      panda_joint7: { p: 2000.0, d: 20.0, i: 0.0, i_clamp: 1.0 }
-
+      panda_joint1: { p: 12000.0, d: 50.0, i: 0.0, i_clamp: 10000.0, ff_velocity_scale: 1.0}
+      panda_joint2: { p: 30000.0, d: 100.0, i: 0.02, i_clamp: 10000.0, ff_velocity_scale: 1.0}
+      panda_joint3: { p: 18000.0, d: 50.0, i: 0.01, i_clamp: 1.0, ff_velocity_scale: 1.0}
+      panda_joint4: { p: 18000.0, d: 70.0, i: 0.01, i_clamp: 10000.0, ff_velocity_scale: 1.0}
+      panda_joint5: { p: 1200.0, d: 70.0, i: 0.01, i_clamp: 1.0, ff_velocity_scale: 1.0}
+      panda_joint6: { p: 7000.0, d: 50.0, i: 0.01, i_clamp: 1.0, ff_velocity_scale: 1.0}
+      panda_joint7: { p:  2000.0, d:  20.0, i: 0.0, i_clamp: 1.0, ff_velocity_scale: 1.0}
+    constraints:
+      goal_time: 0.5
+      panda_joint1: { goal: 0.05 }
+      panda_joint2: { goal: 0.05 }
+      panda_joint3: { goal: 0.05 }
+      panda_joint4: { goal: 0.05 }
+      panda_joint5: { goal: 0.05 }
+      panda_joint6: { goal: 0.05 }
+      panda_joint7: { goal: 0.05 }
+    start_with_holding: true
+    
 panda_hand_controller:
   ros__parameters:
     joint: panda_finger_joint1
