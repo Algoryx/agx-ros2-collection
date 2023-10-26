@@ -11,6 +11,7 @@ import random
 import argparse
 
 from agxPythonModules.utils.environment import simulation, root, application, init_app
+from agxPythonModules.utils.callbacks import StepEventCallback as sec
 
 from agxROS2 import ROS2ControlInterface as cpp_ROS2ControlInterface, ROS2ClockPublisher
 
@@ -78,17 +79,47 @@ def objects_and_table(material, nb_objects):
         node = agxOSG.createVisual(o, root())
         agxOSG.setDiffuseColor(node, color[0])
 
+def setup_gravity_comp(sim, control_joint_names):
+    passive_joints = agx.ConstraintContainer()
+    control_joints = agx.ConstraintContainer()
+    
+    for c in sim.getConstraints():
+        if c.getName() in control_joint_names:
+            control_joints.append(agx.ConstraintRef(c))
+        else:
+            passive_joints.append(agx.ConstraintRef(c))
+    
+    ids = agxModel.InverseDynamics(sim, sim.getRigidBodies(), control_joints, passive_joints)
+    def gravity_compensation(t):
+        ids.sync(agxModel.InverseDynamics.FULL)
+        ids.gravityCompensation()
+        forces = ids.getJointForces(0)
+        for f in forces:
+            joint = control_joints[f.jointIndex]
+            rep = joint.getRep()
+            motor = rep.getMotor1D(f.angleIndex)
+            lock = rep.getLock1D(f.angleIndex)
+            # Control via force/torque:
+            # Disable the motor (if it happens to be enabled)
+            motor.setEnable(False)
+            # Enable the lock
+            lock.setEnable(True)
+            # By setting the lower and upper value of the ForceRange to the same value,
+            # the result is that a constant force/torque is applied.
+            lock.setForceRange(f.value, f.value)
+    sec.preCallback(gravity_compensation)
+
 def buildScene1():
     ap = argparse.ArgumentParser()
     ap.add_argument("panda-urdf", help="Path to the panda.urdf file to load")
     ap.add_argument("panda-urdf-package", help="Path to the package directory that the panda.urdf file references")
-    ap.add_argument("command-interface", choices=["position", "effort"])
+    ap.add_argument("command-interface", default="position", choices=["position", "effort"], help="Effort control requires this fix for ros2_controllers https://github.com/ros-controls/ros2_controllers/pull/558")
     args, _ = ap.parse_known_args()
     args = vars(args)
 
     # Construct the floor that the panda robot will stand on
     floor = agxCollide.Geometry(agxCollide.Box(agx.Vec3(5, 5, 0.1)))
-    floor.setPosition(0, 0, -0.1)
+    floor.setPosition(0, 0, -0.11)
     simulation().add(floor)
     fl = agxOSG.createVisual(floor, root())
     agxOSG.setDiffuseColor(fl, agxRender.Color.LightGray())
@@ -112,7 +143,7 @@ def buildScene1():
     # as a kinematic link and will be merged with its parent. According to http://wiki.ros.org/urdf/XML/link
     # If false, the body will get its mass properties calculated from the shape/volume/density.
     # Default is True.
-    mergeKinematicLink = False
+    mergeKinematicLink = True
 
     settings = agxModel.UrdfReaderSettings(fixToWorld, disableLinkedBodies, mergeKinematicLink)
 
@@ -142,26 +173,32 @@ def buildScene1():
     ros2_clock = ROS2ClockPublisher()
     simulation().add(ros2_clock, agxSDK.EventManager.HIGHEST_PRIORITY)
 
+    command_interface = cpp_ROS2ControlInterface.POSITION
     if args["command-interface"] == "position":
         command_interface = cpp_ROS2ControlInterface.POSITION
     elif args["command-interface"] == "effort":
         command_interface == cpp_ROS2ControlInterface.EFFORT
 
-    joint_names = agx.NameVector()
-    joint_names.append("panda_joint1")
-    joint_names.append("panda_joint2")
-    joint_names.append("panda_joint3")
-    joint_names.append("panda_joint4")
-    joint_names.append("panda_joint5")
-    joint_names.append("panda_joint6")
-    joint_names.append("panda_joint7")
+    control_joint_names = [
+        "panda_joint1",
+        "panda_joint2",
+        "panda_joint3",
+        "panda_joint4",
+        "panda_joint5",
+        "panda_joint6",
+        "panda_joint7",
+    ]
+
+    if command_interface == cpp_ROS2ControlInterface.EFFORT:
+        setup_gravity_comp(simulation(), control_joint_names)
+
     panda_arm_control_interface = cpp_ROS2ControlInterface(
-        panda_assembly_ref.get(),
-        joint_names,
-        command_interface,
-        "agx_joint_states",
-        "agx_joint_commands"
+        "agx_joint_commands",
+        "agx_joint_states"
     )
+    for name in control_joint_names:
+        if not panda_arm_control_interface.addJoint(simulation().getConstraint1DOF(name), command_interface):
+            print("Could not add joint ", name)
     simulation().add(panda_arm_control_interface)
 
     gripper_material = agx.Material("gripper")
@@ -174,13 +211,10 @@ def buildScene1():
     fm.setSolveType(agx.FrictionModel.DIRECT)
     cm.setFrictionModel(fm)
 
+    simulation().setTimeStep(0.004)
     # Setup the camera
     setupCamera(application())
-
     application().getSceneDecorator().setEnableShadows(True)
-
-    simulation().setTimeStep(0.004)
-
     return root()
 
 
