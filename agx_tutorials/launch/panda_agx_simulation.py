@@ -113,7 +113,7 @@ def buildScene1():
     ap = argparse.ArgumentParser()
     ap.add_argument("panda-urdf", help="Path to the panda.urdf file to load")
     ap.add_argument("panda-urdf-package", help="Path to the package directory that the panda.urdf file references")
-    ap.add_argument("command-interface", default="position", choices=["position", "effort"], help="Effort control requires this fix for ros2_controllers https://github.com/ros-controls/ros2_controllers/pull/558")
+    ap.add_argument("--command-interface", default="position", choices=["position", "effort"], help="Effort control requires this fix for ros2_controllers https://github.com/ros-controls/ros2_controllers/pull/558")
     args, _ = ap.parse_known_args()
     args = vars(args)
 
@@ -174,10 +174,10 @@ def buildScene1():
     simulation().add(ros2_clock, agxSDK.EventManager.HIGHEST_PRIORITY)
 
     command_interface = cpp_ROS2ControlInterface.POSITION
-    if args["command-interface"] == "position":
+    if args["command_interface"] == "position":
         command_interface = cpp_ROS2ControlInterface.POSITION
-    elif args["command-interface"] == "effort":
-        command_interface == cpp_ROS2ControlInterface.EFFORT
+    elif args["command_interface"] == "effort":
+        command_interface = cpp_ROS2ControlInterface.EFFORT
 
     control_joint_names = [
         "panda_joint1",
@@ -188,7 +188,6 @@ def buildScene1():
         "panda_joint6",
         "panda_joint7",
     ]
-
     if command_interface == cpp_ROS2ControlInterface.EFFORT:
         setup_gravity_comp(simulation(), control_joint_names)
 
