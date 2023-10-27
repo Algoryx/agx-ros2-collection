@@ -18,15 +18,6 @@ except ImportError as e:
     sys.exit(1)
 
 def generate_launch_description():
-
-    # Command-line arguments
-    ros2_control_hardware_type = DeclareLaunchArgument(
-        "ros2_control_hardware_type",
-        default_value="agx",
-        description="ROS2 control hardware interface type to use for the launch file -- possible values: [mock_components, agx]",
-        choices=["mock_components", "agx"]
-    )
-
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
     moveit_config = (
@@ -34,9 +25,8 @@ def generate_launch_description():
         .robot_description(
             file_path="config/panda.urdf.xacro",
             mappings={
-                "ros2_control_hardware_type": LaunchConfiguration(
-                    "ros2_control_hardware_type"
-                )
+                "ros2_control_hardware_type": "agx",
+                "command_interface": "position"
             },
         )
         .robot_description_semantic(file_path="config/panda.srdf")
@@ -86,23 +76,6 @@ def generate_launch_description():
         arguments=["--frame-id", "world", "--child-frame-id", "panda_link0"],
         parameters=[{'use_sim_time': use_sim_time}]
     )
-    hand2camera_tf_node = Node(
-        package="tf2_ros",
-        executable="static_transform_publisher",
-        name="static_transform_publisher",
-        output="log",
-        arguments=[
-            "0.04",
-            "0.0",
-            "0.04",
-            "0.0",
-            "0.0",
-            "0.0",
-            "panda_hand",
-            "sim_camera",
-        ],
-        parameters=[{'use_sim_time': use_sim_time}]
-    )
 
     # Publish TF
     robot_state_publisher = Node(
@@ -116,7 +89,7 @@ def generate_launch_description():
             ],
     )
 
-    # ros2_control using FakeSystem as hardware
+    # ros2_control
     ros2_controllers_path = os.path.join(
         get_package_share_directory("agx_tutorial_resources_panda_moveit_config"),
         "config",
@@ -162,10 +135,8 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
-            ros2_control_hardware_type,
             rviz_node,
             world2robot_tf_node,
-            hand2camera_tf_node,
             robot_state_publisher,
             move_group_node,
             ros2_control_node,

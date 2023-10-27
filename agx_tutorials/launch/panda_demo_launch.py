@@ -18,21 +18,6 @@ except ImportError as e:
     sys.exit(1)
 
 def generate_launch_description():
-
-    # Command-line arguments
-    ros2_control_hardware_type = DeclareLaunchArgument(
-        "ros2_control_hardware_type",
-        default_value="agx",
-        description="ROS2 control hardware interface type to use for the launch file -- possible values: [mock_components, agx]",
-        choices=["mock_components", "agx"]
-    )
-    command_interface = DeclareLaunchArgument(
-        "command_interface",
-        default_value="position",
-        description="possible values: [position, effort]",
-        choices=["position", "effort"]
-    )
-
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
     path_to_agx_simulation_script = os.path.join(
@@ -63,12 +48,8 @@ def generate_launch_description():
         .robot_description(
             file_path="config/panda.urdf.xacro",
             mappings={
-                "ros2_control_hardware_type": LaunchConfiguration(
-                    "ros2_control_hardware_type"
-                ),
-                "command_interface": LaunchConfiguration(
-                    "command_interface"
-                )
+                "ros2_control_hardware_type": "agx",
+                "command_interface": "position"
             },
         )
         .robot_description_semantic(file_path="config/panda.srdf")
@@ -195,8 +176,6 @@ def generate_launch_description():
     return LaunchDescription(
         [
             start_agx_simulation,
-            ros2_control_hardware_type,
-            command_interface,
             rviz_node,
             world2robot_tf_node,
             hand2camera_tf_node,
