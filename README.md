@@ -37,6 +37,3 @@ When in the root of the repository (where this README.md is) run the .bat file `
 
 ### Note on connection between ros2_control and AGX Simulation
 ros2_control controllers are speaking to the AGX Simulation using the ROS2 package [topic_based_ros2_control](https://github.com/PickNikRobotics/topic_based_ros2_control). The robot listens to `sensor_msgs/JointState` commands on the `agx_joint_commands` topic and sends the current joint states back on the `agx_joint_states` topic. This is currently asynchronous and sensitive to that the simulation runs in realtime. 
-
-## agx_tutorial_resources
-This is at set of ROS2 packages that contains urds-models and config files that the tutorials in agx_tutorial is using
