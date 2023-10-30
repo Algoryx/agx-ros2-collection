@@ -1,0 +1,1 @@
+call python agx_tutorials\launch\panda_agx_simulation.py agx_tutorial_resources\agx_tutorial_resources_panda_description\urdf\panda.urdf agx_tutorial_resources --command-interface %1 
