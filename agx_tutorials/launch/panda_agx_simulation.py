@@ -193,11 +193,16 @@ def buildScene1():
 
     panda_arm_control_interface = cpp_ROS2ControlInterface(
         "agx_joint_commands",
-        "agx_joint_states"
+        "agx_joint_states",
+        syncWithSystemTime=True
     )
     for name in control_joint_names:
         if not panda_arm_control_interface.addJoint(simulation().getConstraint1DOF(name), command_interface):
             print("Could not add joint ", name)
+    # only need to add the first finger since the other is setup to mimic the motion in the physics model
+    if not panda_arm_control_interface.addJoint(simulation().getConstraint1DOF("panda_finger_joint1"), cpp_ROS2ControlInterface.POSITION):
+        print("Could not add finger")
+
     simulation().add(panda_arm_control_interface)
 
     gripper_material = agx.Material("gripper")
