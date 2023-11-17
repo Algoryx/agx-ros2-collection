@@ -10,13 +10,6 @@ from launch.actions import ExecuteProcess
 from ament_index_python.packages import get_package_share_directory, get_package_prefix
 from moveit_configs_utils import MoveItConfigsBuilder
 
-try:
-    import agx
-    import agxIO
-except ImportError as e:
-    print("Could not import AGX. Make sure you have sourced your AGX installation.")
-    sys.exit(1)
-
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
 
@@ -30,6 +23,9 @@ def generate_launch_description():
             },
         )
         .robot_description_semantic(file_path="config/panda.srdf")
+        .planning_scene_monitor(
+            publish_robot_description=True, publish_robot_description_semantic=True
+        )
         .trajectory_execution(file_path="config/gripper_moveit_controllers.yaml")
         .planning_pipelines(pipelines=["ompl", "pilz_industrial_motion_planner"])
         .to_moveit_configs()
