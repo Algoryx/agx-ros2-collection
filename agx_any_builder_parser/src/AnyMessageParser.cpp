@@ -23,16 +23,20 @@ namespace AnyMessageParser_helpers
   {
     ToType<TData> u;
 
+    if (sizeof(TData) > static_cast<size_t>(std::numeric_limits<int64_t>::max()))
+      throw std::invalid_argument("Invalid data size. The length is too large.");
+
+    const int64_t size = static_cast<int64_t>(sizeof(TData));
     if (isBigEndian())
     {
-      for (int64_t i = 0; i < sizeof(TData); i++)
+      for (int64_t i = 0; i < size; i++)
       {
         u.buff[i] = message.data[outIndex++];
       }
     }
     else
     {
-      for (int64_t i = sizeof(TData) - 1; i >= 0; i--)
+      for (int64_t i = size - 1; i >= 0; i--)
       {
         u.buff[i] = message.data[outIndex++];
       }
