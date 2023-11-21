@@ -2,6 +2,8 @@
 
 #include "agx_any_builder_parser/AnyMessageParser.h"
 
+#include <limits>
+
 namespace AnyMessageParser_helpers
 {
   inline bool isBigEndian()
