@@ -29,16 +29,20 @@ namespace AnyMessageBuilder_helpers
     FromType<TData> u;
     u.f = data;
 
+    if (sizeof(TData) > static_cast<size_t>(std::numeric_limits<int64_t>::max()))
+      throw std::invalid_argument("Invalid data size. The length is too large.");
+
+    const int64_t size = static_cast<int64_t>(sizeof(TData));
     if (isBigEndian())
     {
-      for (int64_t i = 0; i < sizeof(TData); i++)
+      for (int64_t i = 0; i < size; i++)
       {
         outMessage.data.push_back(u.buff[i]);
       }
     }
     else
     {
-      for (int64_t i = sizeof(TData) - 1; i >= 0; i--)
+      for (int64_t i = size - 1; i >= 0; i--)
       {
         outMessage.data.push_back(u.buff[i]);
       }
@@ -56,7 +60,7 @@ namespace AnyMessageBuilder_helpers
   void writeSequence(const std::vector<TData>& data, agx_msgs::msg::Any& outMessage)
   {
     if (data.size() > std::numeric_limits<uint64_t>::max())
-      throw std::invalid_argument("Invalid vector length. The length is too large");
+      throw std::invalid_argument("Invalid vector length. The length is too large.");
 
     // We write the length of the vector to the data buffer of the message so that the
     // parser can determine the number of elements in the vector on the receiving side. 
