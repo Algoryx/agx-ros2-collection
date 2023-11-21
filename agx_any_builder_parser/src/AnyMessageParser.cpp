@@ -2,7 +2,9 @@
 
 #include "agx_any_builder_parser/AnyMessageParser.h"
 
+// Standard library includes.
 #include <limits>
+#include <stdexcept>
 
 namespace AnyMessageParser_helpers
 {
