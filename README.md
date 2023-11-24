@@ -29,6 +29,10 @@ There is also an launch file to launch the ROS2 stack without starting the simul
 
 Then you must have launched AGX simulation somewhere else first. This can for example be useful when you have the simulation running in AGX Dynamics for Unity or AGX Dynamics for Unreal (examples for this is coming), or if you are on windows running the simulation natively in windows and the ros2 stack using WSL2.
 
+You can now plan and execute trajectories using the rviz2 gui. Or run the `move_in_square` node to plan and move the end-effector in a square.
+
+`ros2 run agx_tutorials move_panda_in_square`
+
 #### Running on Windows
 To run the simulation on windows checkout this repository and source your windows AGX installation.
 When in the root of the repository (where this README.md is) run the .bat file `start_panda_simulation.bat position` to start the simulation with the position command interface or `start_panda_simulation.bat effort` to start the simulation with the effort command interface. After you have started the simulation you can open your WSL2 terminal and source the workspace where you have built these tutorial packages and run 

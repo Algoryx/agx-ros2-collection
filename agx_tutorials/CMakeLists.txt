@@ -10,7 +10,7 @@ find_package(ament_cmake REQUIRED)
 find_package(moveit_ros_planning_interface REQUIRED)
 find_package(rclcpp REQUIRED)
 
-add_executable(move_panda_in_square src/move_in_square.cpp)
+add_executable(move_panda_in_square src/move_panda_in_square.cpp)
 target_include_directories(move_panda_in_square PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
