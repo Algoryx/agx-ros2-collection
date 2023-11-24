@@ -23,15 +23,20 @@ The same example exists using effort as command interface. Start the effort exam
 
 The controller will now try to follow the planned trajectory position by setting efforts (torques) on the joints of the simulated robot. The error in the position is mapped to efforts through a PID-loop. The simulated robot is also gravity compensated using AGX Dynamics inverse dynamics module.
 
-There is also an launch file to launch the ROS2 stack without the simulation running.
+There is also an launch file to launch the ROS2 stack without starting the simulation.
 
 `ros2 launch agx_tutorials panda_demo_no_simulation_launch.py`
 
 Then you must have launched AGX simulation somewhere else first. This can for example be useful when you have the simulation running in AGX Dynamics for Unity or AGX Dynamics for Unreal (examples for this is coming), or if you are on windows running the simulation natively in windows and the ros2 stack using WSL2.
 
-#### Running 
-To run the simulation on windows using the checkout this repository using and source your windows AGX installation.
-When in the root of the repository (where this README.md is) run the .bat file `start_panda_simulation.bat position` to start the simulation with the position command interface or `start_panda_simulation.bat effort` to start the simulation with the effort command interface.
+#### Running on Windows
+To run the simulation on windows checkout this repository and source your windows AGX installation.
+When in the root of the repository (where this README.md is) run the .bat file `start_panda_simulation.bat position` to start the simulation with the position command interface or `start_panda_simulation.bat effort` to start the simulation with the effort command interface. After you have started the simulation you can open your WSL2 terminal and source the workspace where you have built these tutorial packages and run 
+
+`ros2 launch agx_tutorials panda_demo_no_simulation_launch.py`
+
+The ROS2 stack will with MoveIt and ros2_control will run in WSL and speak ROS2 with the simulation running on windows.
+
 
 ### More robots to come
 ...
