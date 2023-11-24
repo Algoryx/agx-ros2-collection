@@ -1,11 +1,11 @@
 import agx
+import agxROS2
 import agxSDK
 import agxOSG
 import agxCollide
 import agxRender
 import agxModel
 
-import os
 import sys
 import random
 import argparse
@@ -28,7 +28,7 @@ def setupCamera(app):
     app.applyCameraData(camera_data)
 
 
-def objects_and_table(material, nb_objects):
+def objects_and_table(material):
     # table 
     table_size = agx.Vec3(0.2)
     table = agxCollide.Geometry(agxCollide.Box(table_size))
@@ -48,36 +48,30 @@ def objects_and_table(material, nb_objects):
         box.add(geom)
         return box
     
-    def create_cylinder(pos, name, material):
-        height = 0.04
-        radius = 0.02
-        cylinder = agx.RigidBody(name)
-        geom = agxCollide.Geometry(agxCollide.Cylinder(radius, height))
-        geom.setMaterial(material)
-        cylinder.add(geom)
-        cylinder.setPosition(pos + agx.Vec3(0, 0, height / 2))
-        return cylinder
-
     colors = [
         (agxRender.Color_Blue(), "Blue"),
         (agxRender.Color_Red(), "Red"),
         (agxRender.Color_Green(), "Green"),
         (agxRender.Color_BlanchedAlmond(), "BlanchedAlmond")]
-    object_creator = [(create_box, "Box"), (create_cylinder, "Cylinder")]
-    x_loc = np.arange(-table_size.x()+delta, table_size.x()-delta, delta) + table.getPosition().x()
-    y_loc = np.arange(-table_size.y()+delta, table_size.y()-delta, delta) + table.getPosition().y()
     
-    for _ in range(nb_objects):
+    table_pos = table.getPosition()
+    pos = [
+        (table_pos.x()-table_size.x() + 2*delta, -table_size.y() + 2*delta),
+        (table_pos.x()+table_size.x() - 2*delta, -table_size.y() + 2*delta),
+        (table_pos.x()-table_size.x() + 2*delta, table_size.y() - 2*delta),
+        (table_pos.x()+table_size.x() - 2*delta, table_size.y() - 2*delta),
+    ]
+    objects = []
+    for p in pos:
         color = random.choice(colors)
-        creator = random.choice(object_creator)
-        x_pos = np.random.choice(x_loc)
-        y_pos = np.random.choice(y_loc)
-
-        o = creator[0](agx.Vec3(x_pos, y_pos, 2*table_size.z()), f"{color[1]}_{creator[1]}", material)
+        o = create_box(agx.Vec3(p[0], p[1], 2*table_size.z()), f"{color[1]}_box", material)
+        # o.getMassProperties().setMass(0.01)
         simulation().add(o)
         print(o)
         node = agxOSG.createVisual(o, root())
         agxOSG.setDiffuseColor(node, color[0])
+        objects.append(o)
+    return objects
 
 def setup_gravity_comp(sim, control_joint_names):
     passive_joints = agx.ConstraintContainer()
@@ -206,8 +200,21 @@ def buildScene1():
     simulation().add(panda_arm_control_interface)
 
     gripper_material = agx.Material("gripper")
-    objects_and_table(gripper_material, 2)
+    objects = objects_and_table(gripper_material)
+
+    for g in simulation().getRigidBody("panda_rightfinger").getGeometries():
+        g.setMaterial(gripper_material)
+    for g in simulation().getRigidBody("panda_leftfinger").getGeometries():
+        g.setMaterial(gripper_material)
     
+    finger_pose_pub = agxROS2.PublisherGeometryMsgsPose2D("fingerPose")
+    def publish_finger_pose(t):
+        msg = agxROS2.GeometryMsgsPose2D()
+        msg.x = simulation().getRigidBody("panda_rightfinger").getPosition().x()
+        msg.y = simulation().getRigidBody("panda_rightfinger").getPosition().y()
+        finger_pose_pub.sendMessage(msg)
+    sec.preCallback(publish_finger_pose)
+
     # cm
     cm = simulation().getMaterialManager().getOrCreateContactMaterial(gripper_material, gripper_material)
     cm.setFrictionCoefficient(1.0)
