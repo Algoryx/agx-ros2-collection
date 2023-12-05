@@ -22,9 +22,9 @@
       </geometry>
     </collision>
     <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="3.06"/>
-      <inertia ixx="0.3" ixy="0.0" ixz="0.0" iyy="0.3" iyz="0.0" izz="0.3"/>
+      <origin rpy="0 0 0" xyz="-0.041018 -0.00014 0.049974"/>
+      <mass value="0.629769"/>
+      <inertia ixx="0.00315" ixy="8.2904E-07" ixz="0.00015" iyy="0.00388" iyz="8.2299E-06" izz="0.004285"/>
     </inertial>
   </link>
   <link name="panda_link1">
@@ -39,9 +39,9 @@
       </geometry>
     </collision>
     <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="2.34"/>
-      <inertia ixx="0.3" ixy="0.0" ixz="0.0" iyy="0.3" iyz="0.0" izz="0.3"/>
+      <origin rpy="0 0 0" xyz="0.003875 0.002081 -0.04762"/>
+      <mass value="4.970684"/>
+      <inertia ixx="0.70337" ixy="-0.00013900" ixz="0.0067720" iyy="0.70661" iyz="0.019169" izz="0.0091170"/>
     </inertial>
   </link>
   <joint name="panda_joint1" type="revolute">
@@ -65,9 +65,9 @@
       </geometry>
     </collision>
     <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="2.36"/>
-      <inertia ixx="0.3" ixy="0.0" ixz="0.0" iyy="0.3" iyz="0.0" izz="0.3"/>
+      <origin rpy="0 0 0" xyz="-0.003141 -0.02872  0.003495"/>
+      <mass value="0.646926"/>
+      <inertia ixx="0.0079620" ixy="-3.9250e-3" ixz="1.0254e-02" iyy="2.8110e-02" iyz="7.0400e-04" izz="2.5995e-02"/>
     </inertial>
   </link>
   <joint name="panda_joint2" type="revolute">
@@ -91,9 +91,9 @@
       </geometry>
     </collision>
     <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="2.38"/>
-      <inertia ixx="0.3" ixy="0.0" ixz="0.0" iyy="0.3" iyz="0.0" izz="0.3"/>
+      <origin rpy="0 0 0" xyz="2.7518e-02 3.9252e-02 -6.6502e-02"/>
+      <mass value="3.228604"/>
+      <inertia ixx="3.7242e-02" ixy="-4.7610e-03" ixz="-1.1396e-02" iyy="3.6155e-02" iyz="-1.2805e-02" izz="1.0830e-02"/>
     </inertial>
   </link>
   <joint name="panda_joint3" type="revolute">
@@ -117,9 +117,9 @@
       </geometry>
     </collision>
     <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="2.43"/>
-      <inertia ixx="0.3" ixy="0.0" ixz="0.0" iyy="0.3" iyz="0.0" izz="0.3"/>
+      <origin rpy="0 0 0" xyz="-5.317e-02 1.04419e-01 2.7454e-02"/>
+      <mass value="3.587895"/>
+      <inertia ixx="2.5853e-02" ixy="7.7960e-03" ixz="-1.3320e-03" iyy="1.9552e-02" iyz="8.6410e-03" izz="2.8323e-02"/>
     </inertial>
   </link>
   <joint name="panda_joint4" type="revolute">
@@ -143,9 +143,9 @@
       </geometry>
     </collision>
     <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="3.5"/>
-      <inertia ixx="0.3" ixy="0.0" ixz="0.0" iyy="0.3" iyz="0.0" izz="0.3"/>
+      <origin rpy="0 0 0" xyz="-1.1953e-02 4.1065e-02 -3.8437e-02"/>
+      <mass value="1.225946"/>
+      <inertia ixx="3.5549e-02" ixy="-2.1170e-03" ixz="-4.0370e-03" iyy="2.9474e-02" iyz="2.2900e-04" izz="8.6270e-03"/>
     </inertial>
   </link>
   <joint name="panda_joint5" type="revolute">
@@ -169,9 +169,9 @@
       </geometry>
     </collision>
     <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="1.47"/>
-      <inertia ixx="0.3" ixy="0.0" ixz="0.0" iyy="0.3" iyz="0.0" izz="0.3"/>
+      <origin rpy="0 0 0" xyz="6.0149e-02 -1.4117e-02 -1.0517e-02"/>
+      <mass value="1.666555"/>
+      <inertia ixx="1.9640e-03" ixy="1.0900e-04" ixz="-1.1580e-03" iyy="4.3540e-03" iyz="3.4100e-04" izz="5.4330e-03"/>
     </inertial>
   </link>
   <joint name="panda_joint6" type="revolute">
@@ -195,9 +195,9 @@
       </geometry>
     </collision>
     <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="0.45"/>
-      <inertia ixx="0.3" ixy="0.0" ixz="0.0" iyy="0.3" iyz="0.0" izz="0.3"/>
+      <origin rpy="0 0 0" xyz="1.0517e-02 -4.252e-03 6.1597e-02"/>
+      <mass value="7.35522e-01"/>
+      <inertia ixx="1.2516e-02" ixy="-4.2800e-04" ixz="-1.1960e-03" iyy="1.0027e-02" iyz="-7.4100e-04" izz="4.8150e-03"/>
     </inertial>
   </link>
   <joint name="panda_joint7" type="revolute">
@@ -240,9 +240,9 @@
       </geometry>
     </collision>
     <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="0.68"/>
-      <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+      <origin rpy="0 0 0" xyz="-0.01 0 0.03"/>
+      <mass value="0.73"/>
+      <inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.0025" iyz="0.0" izz="0.0017"/>
     </inertial>
   </link>
   <link name="panda_leftfinger">
@@ -258,8 +258,8 @@
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="0.01"/>
-      <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+      <mass value="0.015"/>
+      <inertia ixx="2.3749999999999997e-06" ixy="0.0" ixz="0.0" iyy="2.3749999999999997e-06" iyz="0.0" izz="7.5e-07"/>
     </inertial>
   </link>
   <link name="panda_rightfinger">
@@ -277,8 +277,8 @@
     </collision>
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="0.01"/>
-      <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+      <mass value="0.015"/>
+      <inertia ixx="2.3749999999999997e-06" ixy="0.0" ixz="0.0" iyy="2.3749999999999997e-06" iyz="0.0" izz="7.5e-07"/>
     </inertial>
   </link>
   <joint name="panda_finger_joint1" type="prismatic">
