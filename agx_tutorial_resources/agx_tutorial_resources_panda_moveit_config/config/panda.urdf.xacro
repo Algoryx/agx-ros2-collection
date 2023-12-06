@@ -4,12 +4,12 @@
     <xacro:arg name="ros2_control_hardware_type" default="mock_components" />
 
     <!-- Import panda urdf file -->
-    <xacro:include filename="$(find agx_tutorial_resources_panda_description)/urdf/panda.urdf.xacro" />
+    <xacro:include filename="$(find agx_tutorial_resources_panda_description)/urdf/panda.urdf" />
 
     <!-- Import panda ros2_control description -->
     <xacro:include filename="panda.ros2_control.xacro" />
     <xacro:include filename="panda_hand.ros2_control.xacro" />
 
-    <xacro:panda_ros2_control name="PandaFakeSystem" initial_positions_file="$(arg initial_positions_file)" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
+    <xacro:panda_ros2_control name="PandaFakeSystem" initial_positions_file="$(arg initial_positions_file)" ros2_control_hardware_type="$(arg ros2_control_hardware_type)" command_interface="$(arg command_interface)"/>
     <xacro:panda_hand_ros2_control name="PandaHandFakeSystem" ros2_control_hardware_type="$(arg ros2_control_hardware_type)"/>
 </robot>

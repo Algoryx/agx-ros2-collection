@@ -10,38 +10,8 @@ from launch.actions import ExecuteProcess
 from ament_index_python.packages import get_package_share_directory, get_package_prefix
 from moveit_configs_utils import MoveItConfigsBuilder
 
-try:
-    import agx
-    import agxIO
-except ImportError as e:
-    print("Could not import AGX. Make sure you have sourced your AGX installation.")
-    sys.exit(1)
-
 def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
-
-    path_to_agx_simulation_script = os.path.join(
-        get_package_share_directory("agx_tutorials"),
-        "launch",
-        "panda_agx_simulation.py"
-    )
-
-    path_to_urdf = os.path.join(
-        get_package_share_directory("agx_tutorial_resources_panda_description"),
-        "urdf",
-        "panda.urdf"
-    )
-    path_to_package_install = os.path.join(
-        get_package_prefix("agx_tutorial_resources_panda_description"), ".."
-    )
-    start_agx_simulation = ExecuteProcess(
-            cmd=[
-            'python3',
-            path_to_agx_simulation_script,
-            path_to_urdf,
-            path_to_package_install],
-            name="agx simulation",
-            shell=True)
 
     moveit_config = (
         MoveItConfigsBuilder("agx_tutorial_resources_panda")
@@ -53,6 +23,9 @@ def generate_launch_description():
             },
         )
         .robot_description_semantic(file_path="config/panda.srdf")
+        .planning_scene_monitor(
+            publish_robot_description=True, publish_robot_description_semantic=True
+        )
         .trajectory_execution(file_path="config/gripper_moveit_controllers.yaml")
         .planning_pipelines(pipelines=["ompl", "pilz_industrial_motion_planner"])
         .to_moveit_configs()
@@ -99,23 +72,6 @@ def generate_launch_description():
         arguments=["--frame-id", "world", "--child-frame-id", "panda_link0"],
         parameters=[{'use_sim_time': use_sim_time}]
     )
-    hand2camera_tf_node = Node(
-        package="tf2_ros",
-        executable="static_transform_publisher",
-        name="static_transform_publisher",
-        output="log",
-        arguments=[
-            "0.04",
-            "0.0",
-            "0.04",
-            "0.0",
-            "0.0",
-            "0.0",
-            "panda_hand",
-            "sim_camera",
-        ],
-        parameters=[{'use_sim_time': use_sim_time}]
-    )
 
     # Publish TF
     robot_state_publisher = Node(
@@ -129,7 +85,7 @@ def generate_launch_description():
             ],
     )
 
-    # ros2_control using FakeSystem as hardware
+    # ros2_control
     ros2_controllers_path = os.path.join(
         get_package_share_directory("agx_tutorial_resources_panda_moveit_config"),
         "config",
@@ -175,10 +131,8 @@ def generate_launch_description():
 
     return LaunchDescription(
         [
-            start_agx_simulation,
             rviz_node,
             world2robot_tf_node,
-            hand2camera_tf_node,
             robot_state_publisher,
             move_group_node,
             ros2_control_node,

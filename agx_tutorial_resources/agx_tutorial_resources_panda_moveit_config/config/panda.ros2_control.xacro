@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <xacro:macro name="panda_ros2_control" params="name initial_positions_file ros2_control_hardware_type">
+    <xacro:macro name="panda_ros2_control" params="name initial_positions_file ros2_control_hardware_type command_interface">
         <xacro:property name="initial_positions" value="${xacro.load_yaml(initial_positions_file)['initial_positions']}"/>
 
         <ros2_control name="${name}" type="system">
@@ -13,52 +13,53 @@
                     <plugin>topic_based_ros2_control/TopicBasedSystem</plugin>
                     <param name="joint_commands_topic">/agx_joint_commands</param>
                     <param name="joint_states_topic">/agx_joint_states</param>
+                    <param name="trigger_joint_command_threshold">0.000000000001</param>
                 </xacro:if>
             </hardware>
             <joint name="panda_joint1">
-                <command_interface name="position"/>
+                <command_interface name="${command_interface}"/>
                 <state_interface name="position">
                   <param name="initial_value">${initial_positions['panda_joint1']}</param>
                 </state_interface>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="panda_joint2">
-                <command_interface name="position"/>
+                <command_interface name="${command_interface}"/>
                 <state_interface name="position">
                   <param name="initial_value">${initial_positions['panda_joint2']}</param>
                 </state_interface>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="panda_joint3">
-                <command_interface name="position"/>
+                <command_interface name="${command_interface}"/>
                 <state_interface name="position">
                   <param name="initial_value">${initial_positions['panda_joint3']}</param>
                 </state_interface>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="panda_joint4">
-                <command_interface name="position"/>
+                <command_interface name="${command_interface}"/>
                 <state_interface name="position">
                   <param name="initial_value">${initial_positions['panda_joint4']}</param>
                 </state_interface>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="panda_joint5">
-                <command_interface name="position"/>
+                <command_interface name="${command_interface}"/>
                 <state_interface name="position">
                   <param name="initial_value">${initial_positions['panda_joint5']}</param>
                 </state_interface>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="panda_joint6">
-                <command_interface name="position"/>
+                <command_interface name="${command_interface}"/>
                 <state_interface name="position">
                   <param name="initial_value">${initial_positions['panda_joint6']}</param>
                 </state_interface>
                 <state_interface name="velocity"/>
             </joint>
             <joint name="panda_joint7">
-                <command_interface name="position"/>
+                <command_interface name="${command_interface}"/>
                 <state_interface name="position">
                   <param name="initial_value">${initial_positions['panda_joint7']}</param>
                 </state_interface>
