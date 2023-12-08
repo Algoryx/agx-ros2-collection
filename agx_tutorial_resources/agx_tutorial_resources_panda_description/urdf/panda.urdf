@@ -209,13 +209,7 @@
     <limit effort="12" lower="-2.8973" upper="2.8973" velocity="2.6100"/>
     <dynamics damping="10000000.0"/>
   </joint>
-  <link name="panda_link8">
-    <inertial>
-      <origin rpy="0 0 0" xyz="0 0 0"/>
-      <mass value="0.1"/>
-      <inertia ixx="0.3" ixy="0.0" ixz="0.0" iyy="0.3" iyz="0.0" izz="0.3"/>
-    </inertial>
-  </link>
+  <link name="panda_link8"/>
   <joint name="panda_joint8" type="fixed">
     <origin rpy="0 0 0" xyz="0 0 0.107"/>
     <parent link="panda_link7"/>
