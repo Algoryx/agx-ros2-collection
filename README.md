@@ -17,12 +17,6 @@ robot joints holds the assigned position using the [Lock1D](https://www.algoryx.
 
 ![Panda](images/panda.jpg)
 
-The same example exists using effort as command interface. Start the effort example using:
-
-`ros2 launch agx_tutorials panda_demo_effort_launch.py`
-
-The controller will now try to follow the planned trajectory position by setting efforts (torques) on the joints of the simulated robot. The error in the position is mapped to efforts through a PID-loop. The simulated robot is also gravity compensated using AGX Dynamics inverse dynamics module.
-
 There is also an launch file to launch the ROS2 stack without starting the simulation.
 
 `ros2 launch agx_tutorials panda_demo_no_simulation_launch.py`
@@ -35,7 +29,7 @@ You can now plan and execute trajectories using the rviz2 gui. Or run the `move_
 
 #### Running on Windows
 To run the simulation on windows checkout this repository and source your windows AGX installation.
-When in the root of the repository (where this README.md is) run the .bat file `start_panda_simulation.bat position` to start the simulation with the position command interface or `start_panda_simulation.bat effort` to start the simulation with the effort command interface. After you have started the simulation you can open your WSL2 terminal and source the workspace where you have built these tutorial packages and run 
+When in the root of the repository (where this README.md is) run the .bat file `start_panda_simulation.bat position` to start the simulation with the position command interface. After you have started the simulation you can open your WSL2 terminal and source the workspace where you have built these tutorial packages and run 
 
 `ros2 launch agx_tutorials panda_demo_no_simulation_launch.py`
 
